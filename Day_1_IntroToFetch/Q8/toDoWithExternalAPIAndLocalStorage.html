@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <style>
+        body{
+            background-color: whitesmoke;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h2{
+            color: blueviolet;
+            text-align: center;
+        }
+        button{
+            padding: 8px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            color: white;
+            cursor: pointer;
+        }
+        #getdata{
+            background-color: green;
+            font-weight: bold;
+            margin: 10px auto;
+            width: 150px;
+            display: block;
+        }
+        #delete{
+            background-color: red;
+        }
+        .card{
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 5px;
+        }
+        h3{
+            color: rgb(75, 75, 252);
+        }
+        p{
+            background-color: rgb(209, 63, 63);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+            padding: 12px;
+            font-size: 16px;
+            margin: 50px auto;
+        }
+        #status{
+            background-color: rgb(21, 168, 21);
+        }
+        h5{
+            background-color: bisque;
+            padding: 10px;
+            border-radius: 6px;
+            width: fit-content;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h2>TODO Application</h2>
+    <button id="getdata" onclick="displayData()">Get Data</button>
+    <div id="todolist">
+
+    </div>
+    <script>
+        // Fetch Data
+        function displayData(){
+            fetch("https://jsonplaceholder.typicode.com/todos")
+                         .then((response)=>response.json())
+                         .then((todos)=>{
+                                let data=todos.slice(0,20);
+                                localStorage.setItem("data",JSON.stringify(data)); 
+                                appendData();
+                         }) 
+              
+        }
+        
+        //Store in localStorage
+        let data=JSON.parse(localStorage.getItem("data"))||[];
+
+        function appendData(){
+            const list=document.getElementById("todolist");
+            list.innerHTML="";
+            if(data.length===0){
+                let emptyData=document.createElement("p");
+                emptyData.textContent="No Todos Available";
+                list.append(emptyData);
+                return;
+            }
+            data.forEach((item,index)=>{
+                let card=document.createElement("div");
+                card.className="card";
+
+                let title=document.createElement("h3");
+                title.textContent=item.title;
+
+                let completed=document.createElement("h5");
+                completed.textContent="Completed: " +item.completed;
+
+                let statusToggle=document.createElement("button");
+                statusToggle.textContent="Toggle Status";
+                statusToggle.setAttribute("id","status")
+                statusToggle.addEventListener("click",()=>{
+                    item.completed=!item.completed;
+                    localStorage.setItem("data",JSON.stringify(data));
+                    appendData();
+                })
+
+                let deletebtn=document.createElement("button");
+                deletebtn.textContent="Delete";
+                deletebtn.setAttribute("id","delete")
+                deletebtn.addEventListener("click",()=>{
+                    data.splice(index,1);
+                    localStorage.setItem("data",JSON.stringify(data)); 
+                    appendData();
+                });
+                card.append(title,completed,statusToggle,deletebtn);
+                list.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
