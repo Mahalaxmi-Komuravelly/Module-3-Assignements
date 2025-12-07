@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management App Using Firebase</title>
+    <style>
+        body{
+            background-color: whitesmoke;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #form{
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            margin: 0;
+            border-radius: 6px;
+            box-shadow: 0px 2px 8px rgba(0.24);
+            
+        }
+        input{
+            padding: 8px;
+            margin: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        image{
+            padding: 5px;
+        }
+        h3,h4,p{
+            margin: 5px;
+        }
+        h1{
+            color: rgb(25, 96, 230);
+            margin: 8px;
+            padding: 5px;
+            text-align: center;
+        }
+        h2{
+            color: rgb(25, 96, 230);
+        }
+        button{
+            border: none;
+            cursor: pointer;
+            color: white;
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;   
+        }
+        #addbookbtn{
+            background-color: rgb(82,120,190);
+            width: fit-content;
+            margin: auto;
+            font-weight: bold;
+        }
+        .updatebtn{
+            background-color: rgb(255, 196, 0);
+        }
+        .deletebtn{
+            background-color: red;
+        }
+        #main{
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+        }
+        #sidebar{
+            margin: 5px;
+            width: 20%;
+        }
+        .viewdetailsbtn{
+            background-color: rgb(82,120,190) ;
+        }
+        .card{
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            box-shadow: 0px 2px 6px rgba(0.24);
+            background-color: white;
+        }
+        #container{
+            display: flex;
+            width: 95%;
+        }
+        #sidebar > h2{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book Management</h1>
+    <div id="container">
+        
+        <div id="sidebar">
+            <h2>Add Book</h2>
+            <form id="form">
+                <input type="text" id="title" placeholder="Enter title">
+                <input type="text" id="author" placeholder="Enter author">
+                <input type="text" id="price" placeholder="Enter price">
+                <input type="text" id="image" placeholder="Enter Image URL">
+                <button type="submit" id="addbookbtn">Add Book</button>
+            </form>
+        </div>
+        <div id="main">
+
+        </div>
+    </div>
+    <script>
+        let form=document.getElementById("form");
+        form.addEventListener("submit",addBook);
+        async function addBook(event){
+            event.preventDefault();
+            try{
+                let title=document.getElementById("title").value.trim();
+                let author=document.getElementById("author").value.trim();
+                let price=document.getElementById("price").value.trim();
+                let image=document.getElementById("image").value.trim();
+                
+                if(!title || !author|| !price || !image){
+                    alert("Please enter all details");
+                    return;
+                }
+
+                let book={
+                    title,
+                    author,
+                    price,
+                    image
+                }
+                const response=await fetch("https://book-management-app-1cd18-default-rtdb.asia-southeast1.firebasedatabase.app/books.json",
+                {
+                    method:"POST",
+                    body:JSON.stringify(book)
+                });
+                alert("Book added successfully");
+                document.getElementById("title").value="";
+                document.getElementById("author").value="";
+                document.getElementById("price").value="";
+                document.getElementById("image").value="";
+            }
+            catch(error){
+                console.log("Error occured while adding the book",error);
+            }
+           getBooks(); 
+        }
+
+        async function getBooks(){
+            try {
+                let response = await fetch("https://book-management-app-1cd18-default-rtdb.asia-southeast1.firebasedatabase.app/books.json");
+                let data= await response.json();
+                console.log(data);
+                let newData=data ? Object.entries(data).map(([id,book])=>({
+                    id,
+                    ...book
+                })):[];
+                displayBooks(newData);
+                console.log(newData);
+            } catch (error) {
+                console.log("Error occured while fetching the data",error);
+            }
+        }
+
+        function displayBooks(books){
+            console.log("Displaying books:", books);  
+            let mainDiv=document.getElementById("main");
+            mainDiv.innerHTML="";
+
+            books.forEach((book,index)=>{
+                let card=document.createElement("div");
+                card.className="card";
+
+                let image=document.createElement("img");
+                image.src=book.image;
+                image.style.width="120px";
+
+                let title=document.createElement("h3");
+                title.textContent=book.title;
+
+                let author=document.createElement("h4");
+                author.textContent=book.author;
+
+                let price=document.createElement("p");
+                price.textContent=book.price;
+
+                let updatebtn=document.createElement("button");
+                updatebtn.textContent="Update Author";
+                updatebtn.className = "updatebtn";
+                updatebtn.addEventListener("click",()=>updateAuthor(book.id,book.author));
+
+                let deletebtn=document.createElement("button");
+                deletebtn.textContent="Delete";
+                deletebtn.className = "deletebtn";
+                deletebtn.addEventListener("click",()=>deleteBook(book.id));
+
+                let viewdetailsbtn=document.createElement("button");
+                viewdetailsbtn.textContent="View Details";
+                viewdetailsbtn.className="viewdetailsbtn";
+                viewdetailsbtn.addEventListener("click",()=>alert(`Title : ${book.title}\n Author : ${book.author}\n Price : ${book.price}`));
+
+                card.append(image,title,author,price,updatebtn,deletebtn,viewdetailsbtn);
+                mainDiv.append(card);
+
+            })
+        }
+        async function updateAuthor(id,oldAuthor){
+            let updatedAuthor=prompt("Enter new author name: ",oldAuthor);
+            if(!updatedAuthor) return;
+            await fetch(`https://book-management-app-1cd18-default-rtdb.asia-southeast1.firebasedatabase.app/books/${id}.json`,
+            {
+                method:"PATCH",
+                body:JSON.stringify({author:updatedAuthor})
+            });
+
+            alert("Author updated successfully!")
+            getBooks();
+        }
+        async function deleteBook(id){
+            await fetch(`https://book-management-app-1cd18-default-rtdb.asia-southeast1.firebasedatabase.app/books/${id}.json`,{
+                method:"DELETE"
+            });
+            alert("User deleted!")
+            getBooks();
+        }
+        getBooks();
+    </script>
+</body>
+</html>
