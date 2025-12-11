@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+
+    <div>
+        <nav id="navbar"></nav>
+    </div>
+    
+        <h1>Welcome To Modular JS</h1>
+        <button id="gosignup">Go to SignUp</button>
+        <button id="gologin">Go To Login</button>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div>
+        <footer id="footer"></footer>
+    </div>
+    <script type="module">
+        import {navBar} from './scripts/components/navbar.js';
+        import {footer} from './scripts/components/footer.js';
+        
+
+        document.getElementById("navbar").innerHTML=navBar();
+        document.getElementById("footer").innerHTML=footer();
+
+        let signupbtn=document.getElementById("gosignup");
+        signupbtn.addEventListener("click",()=>window.location.href="./pages/signup.html");
+
+        let loginbtn=document.getElementById("gologin");
+        loginbtn.addEventListener("click",()=>window.location.href="./pages/login.html");
+
+
+    </script>
+</body>
+</html>

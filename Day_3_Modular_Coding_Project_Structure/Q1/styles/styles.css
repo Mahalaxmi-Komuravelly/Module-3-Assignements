@@ -1,0 +1,70 @@
+body{
+    background-color: rgb(177, 233, 131);
+    font-family: Arial, Helvetica, sans-serif;
+}
+.signup-form,.login-form{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 300px;
+    margin: auto;
+    padding: 15px 20px;
+}
+input{
+    border-radius: 6px;
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+}
+button{
+    color: white;
+    background-color: rgb(83,120,200);
+    border: none;
+    margin: auto;
+    border-radius: 6px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+h2,h1{
+    text-align: center;
+    color: rgb(83,120,200);
+    font-weight: bold;
+}
+a{
+    margin: 6px;
+    padding: 3px;
+    color: white;
+}
+
+ul{
+    display: flex;
+    background-color:rgb(83,120,200);
+    justify-content: center;
+    padding: 10px;   
+}
+footer{
+    color: brown;
+}
+
+.card{
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin: 8px;
+    padding: 6px;
+}
+
+h3{
+    color: blueviolet;
+}
+
+p{
+    color: rgb(110, 206, 20);
+    font-weight: 600;
+}
+
+
