@@ -1,0 +1,35 @@
+
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(54, 191, 236);
+}
+
+
+.card{
+  background-color: lightgreen ;
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid rgb(182, 169, 169);
+  border-radius: 6px;
+  width: 50%;
+
+}
+p{
+  font-weight: 500;
+  font-size: 20px;
+}
+
+button{
+  background-color: coral;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: auto;
+  font-size: 16px;
+  display: block;
+}
+
