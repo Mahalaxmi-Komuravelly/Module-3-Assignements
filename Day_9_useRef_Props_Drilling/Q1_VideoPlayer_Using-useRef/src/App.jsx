@@ -1,8 +1,9 @@
-import VideoPlayer from "./VideoPlayer";
+
+import VideoPlayerAdvanced from "./VideoPlayerAdvanced";
 
 
 function App(){
-    return <VideoPlayer/>
+    return <VideoPlayerAdvanced/>
 }
 
 export default App;
