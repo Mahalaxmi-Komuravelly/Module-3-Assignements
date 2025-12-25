@@ -1,0 +1,63 @@
+body{
+  background-color: aquamarine;
+  
+}
+.container{
+  background-color: white;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 150px;
+}
+input{
+  padding: 8px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px 15px;
+  width: 70%;
+}
+h2{
+  text-align: center;
+}
+.btns{
+   display: flex;
+   margin: 10px 0;
+   
+}
+button{
+  background-color: rgb(6, 107, 107);
+  border: none;
+  color: white;
+  padding: 8px;
+  margin: auto;
+  border-radius: 6px;
+  padding: 8px 15px;
+  display: block;
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+.details{
+  text-align: center;
+  background-color: white;
+  padding: 8px;
+  width: 500px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+p{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
