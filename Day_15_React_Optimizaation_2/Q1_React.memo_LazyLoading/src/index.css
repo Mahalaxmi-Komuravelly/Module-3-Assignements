@@ -1,0 +1,42 @@
+body{
+  background-color: aquamarine;
+}
+button{
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  display: block;
+  margin:5px auto;
+  background-color: rgb(103, 103, 197);
+  font-weight: bold;
+  font-size: 14px;
+}
+h2,h3{
+  text-align: center;
+  padding: 10px;
+}
+
+h3{
+  color: rgb(238, 101, 101);
+  font-size: 20px;
+}
+
+.card{
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 5px;
+  background-color: white;
+  width: 300px;
+  text-align: center;
+}
+h4{
+  font-size: 17px;
+  color: blue;
+}
+p{
+  color: brown;
+  font-size: 17px;
+  font-weight: bold;
+}
